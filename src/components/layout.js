@@ -17,7 +17,9 @@ class Template extends React.Component {
     return (
       <Container>
         <Navigation />
-        {children}
+        <div style={{margin: '10% 20% auto'}}>
+          {children}
+        </div>
       </Container>
     )
   }
