@@ -32,7 +32,7 @@ class RootIndex extends React.Component {
       try {
         const response = await fetch('https://us-central1-quickstart-1580081840462.cloudfunctions.net/function-1', {
           method: 'POST',
-          body,
+          body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json'
           }
