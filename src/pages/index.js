@@ -52,7 +52,12 @@ class RootIndex extends React.Component {
     const question = get(this, 'props.data.allContentfulQuestion.nodes[0]')
     return (
       <Layout location={this.props.location}>
-        <Helmet title={siteTitle} />
+        <Helmet>
+          <title>{siteTitle}</title>
+          <meta property="og:title" content="Question of Today"/>
+          <meta property="og:site_name" content="questionof.today"/>
+          <meta property="og:description" content={question.title}/> 
+        </Helmet>
         <div>
           <h4>{question.date}</h4>
           <h1>Question #{question.number}</h1>
