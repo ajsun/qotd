@@ -49,7 +49,7 @@ class RootIndex extends React.Component {
 
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const question = get(this, 'props.data.contentfulQuestion')
+    const question = get(this, 'props.data.allContentfulQuestion.nodes[0]')
     return (
       <Layout location={this.props.location}>
         <Helmet title={siteTitle} />
@@ -92,10 +92,12 @@ export const pageQuery = graphql`
         title
       }
     }
-    contentfulQuestion {
-      title
-      number
-      date(formatString: "MMMM DD, YYYY")
+    allContentfulQuestion(limit: 1, sort: { fields: number, order: DESC }) {
+      nodes {
+        title
+        number
+        date(formatString: "MMMM DD, YYYY")
+      }
     }
   }
 `
