@@ -27,7 +27,7 @@ class RootIndex extends React.Component {
       const body = {
         name: name,
         answer: answer,
-        question_id: this.props.data.contentfulQuestion.number
+        question_id: this.props.data.allContentfulQuestion.nodes[0].number
       }
       try {
         const response = await fetch('https://us-central1-quickstart-1580081840462.cloudfunctions.net/function-1', {
