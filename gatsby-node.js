@@ -24,14 +24,19 @@ exports.createPages = async ({ graphql, actions}) => {
         }      
     `)
 
-    result.data.allContentfulQuestion.nodes.forEach((node) => {
+    result.data.allContentfulQuestion.nodes.forEach((node, index) => {
+        const previous = index === result.data.allContentfulQuestion.nodes.length - 1 ? null : result.data.allContentfulQuestion.nodes[index + 1]
+        const next = index === 0 ? null : result.data.allContentfulQuestion.nodes[index - 1]
+
         createPage({
             path: `${node.number}`,
             component: path.resolve('./src/templates/question.js'),
             context: {
                 number:node.number,
                 date: node.date,
-                title: node.title
+                title: node.title,
+                previous,
+                next
             }
         })
     })
@@ -45,7 +50,9 @@ exports.createPages = async ({ graphql, actions}) => {
                 shortCode: node.shortCode
             }
         })
-        result.data.allContentfulQuestion.nodes.forEach((q) => {
+        result.data.allContentfulQuestion.nodes.forEach((q, index) => {
+            const previous = index === result.data.allContentfulQuestion.nodes.length - 1 ? null : result.data.allContentfulQuestion.nodes[index + 1]
+            const next = index === 0 ? null : result.data.allContentfulQuestion.nodes[index - 1]
             createPage({
                 path: `${node.shortCode}/${q.number}`,
                 component: path.resolve('./src/templates/question.js'),
@@ -53,7 +60,9 @@ exports.createPages = async ({ graphql, actions}) => {
                     number: q.number,
                     date: q.date,
                     title: q.title,
-                    shortCode: node.shortCode
+                    shortCode: node.shortCode,
+                    previous,
+                    next
                 }
             })
         })
