@@ -1,27 +1,17 @@
 import React from 'react'
 import Layout from '../components/layout'
+import Answers from '../components/answers'
 
-export default ({ data }) => {
-    const question = data.contentfulQuestion
-    
+export default ({ data, pageContext }) => {
+    const { date, number, title, shortCode } = pageContext    
     return (
         <Layout>
             <div>
-                <h4>Published on: {question.date}</h4>
-                <h1>Question #{question.number}</h1>
-                <p>{question.title}</p>
+                <h4>Published on: {date}</h4>
+                <h1>Question #{number}</h1>
+                <p>{title}</p>
             </div>
+            <Answers questionId={number} shortCode={shortCode} />
         </Layout>
     )
 }
-
-
-export const query = graphql`
-    query($number: Int) {
-        contentfulQuestion(number: { eq: $number }) {
-            title
-            number
-            date(formatString: "MMMM DD, YYYY")
-        }
-    }
-`

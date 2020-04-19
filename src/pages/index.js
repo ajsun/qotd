@@ -1,9 +1,10 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
 import get from 'lodash/get'
-import Helmet from 'react-helmet'
+import SEO from '../components/seo'
 import Layout from '../components/layout'
 import styles from './index.module.css'
+import api from '../utils/fetch'
 
 class RootIndex extends React.Component {
   state = {
@@ -30,13 +31,7 @@ class RootIndex extends React.Component {
         question_id: this.props.data.allContentfulQuestion.nodes[0].number
       }
       try {
-        const response = await fetch('https://us-central1-quickstart-1580081840462.cloudfunctions.net/function-1', {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        await api.save(body)
       } catch(err) {
         return alert("We didn't get that, try again")
       }
@@ -48,16 +43,13 @@ class RootIndex extends React.Component {
   }
 
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const question = get(this, 'props.data.allContentfulQuestion.nodes[0]')
     return (
       <Layout location={this.props.location}>
-        <Helmet>
-          <title>{siteTitle}</title>
-          <meta property="og:title" content="Question of Today"/>
-          <meta property="og:site_name" content="questionof.today"/>
-          <meta property="og:description" content={question.title}/> 
-        </Helmet>
+        <SEO 
+          title="Home"
+          description={question.title}
+        />
         <div>
           <h4>{question.date}</h4>
           <h1>Question #{question.number}</h1>
@@ -92,11 +84,6 @@ export default RootIndex
 
 export const pageQuery = graphql`
   query HomeQuery {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allContentfulQuestion(limit: 1, sort: { fields: number, order: DESC }) {
       nodes {
         title

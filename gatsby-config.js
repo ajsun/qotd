@@ -18,7 +18,9 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'QOTD',
+    title: 'Question of Today',
+    description: 'Thoughtful and interesting questions updated every week',
+    author: 'J+A'
   },
   plugins: [
     'gatsby-transformer-remark',
