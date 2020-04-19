@@ -2,11 +2,16 @@ import React from 'react'
 import { Link } from 'gatsby'
 import Layout from '../components/layout'
 import Answers from '../components/answers'
+import SEO from '../components/seo'
 
 export default ({ data, pageContext }) => {
     const { date, number, title, shortCode, previous, next } = pageContext    
     return (
         <Layout>
+            <SEO 
+                title={`Question ${number}`}
+                description={title}
+            />
             <ul
                 style={{
                     display: `flex`,
